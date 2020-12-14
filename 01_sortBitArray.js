@@ -5,8 +5,9 @@ const sortBitArray = (bitArray) => {
     let left = 0;
     let right = bitArray.length - 1;
     while (left < right) {
-        bitArray[left] === 0 && left++;
-        bitArray[right] === 1 && right--;
+        while (bitArray[left] === 0) left++;
+        while (bitArray[right] === 1) right--;
+
         if (left < right) {
             [bitArray[left], bitArray[right]] = [
                 bitArray[right],
@@ -23,7 +24,7 @@ const sortBitArray = (bitArray) => {
 If element at index left is equal to 0, than we increment left.
 If element at index right is equal to 1, than we decrement.
 Once element at index left is 1 and element at index right 0, we swap. 
-Swapping happens only left index is bigger than right index.
+Swapping happens only left index is bigger than right index. 
 */
 
 console.log(sortBitArray([0, 1, 1, 1, 1, 0, 0, 0]));
