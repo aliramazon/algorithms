@@ -9,7 +9,7 @@ const mergeTwoSortedArrays = (array1, array2) => {
     let j = 0;
     const totalElements = array1.length + array2.length;
 
-    while (i + j < 4) {
+    while (i + j < totalElements) {
         if (array1[i] > array2[j] || i >= array1.length) {
             mergedArrays.push(array2[j]);
             j++;
