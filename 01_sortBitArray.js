@@ -1,6 +1,7 @@
-// Given a bit array, return it sorted in-place (a bit array is simply an array that contains only bits, either a 1 or a 0).
-// See if you can solve this in O(N) time and O(1) auxiliary space.
+/*  Given a bit array, return it sorted in-place (a bit array is simply an array that contains only bits, either a 1 or a 0).
+ See if you can solve this in O(N) time and O(1) auxiliary space using Multiple pointers technique */
 
+// Multiple pointers technique
 const sortBitArray = (bitArray) => {
     let left = 0;
     let right = bitArray.length - 1;
@@ -28,3 +29,28 @@ Swapping happens only left index is bigger than right index.
 */
 
 console.log(sortBitArray([0, 1, 1, 1, 1, 0, 0, 0]));
+
+/* Given a bit array, return it sorted in-place (a bit array is simply an array that contains only bits, either 0 or 1).
+ See if you can solve this in O(N) time and O(1) auxiliary space using Frequent count technique */
+
+// Frequent Count technique
+
+const sortBitArrayFC = (bitArray) => {
+    const count = [0, 0];
+
+    for (let ele of bitArray) {
+        count[ele]++;
+    }
+
+    for (let i = 0; i < bitArray.length; i++) {
+        if (i < count[0]) {
+            bitArray[i] = 0;
+        } else {
+            bitArray[i] = 1;
+        }
+    }
+
+    return bitArray;
+};
+
+console.log(sortBitArrayFC([0, 0, 0, 1, 1, 1, 0, 0, 1]));
