@@ -14,7 +14,7 @@ const sortBitArray = (bitArray) => {
         if (left < right) {
             [bitArray[left], bitArray[right]] = [
                 bitArray[right],
-                bitArray[left],
+                bitArray[left]
             ];
         }
     }
