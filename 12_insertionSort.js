@@ -7,14 +7,11 @@ const insertionSort = (array) => {
             if (array[prevPos] > tempValue) {
                 array[prevPos + 1] = array[prevPos];
                 prevPos--;
-                if (prevPos === -1) {
-                    array[0] = tempValue;
-                }
             } else {
-                array[prevPos + 1] = tempValue;
                 break;
             }
         }
+        array[prevPos + 1] = tempValue;
     }
 
     return array;
