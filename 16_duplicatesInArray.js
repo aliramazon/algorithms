@@ -1,5 +1,5 @@
-const dublicatesInArray = (arr) => {
-    const dublicates = [];
+const duplicatesInArray = (arr) => {
+    const duplicates = [];
     const hash = {};
 
     for (let item of arr) {
@@ -7,7 +7,7 @@ const dublicatesInArray = (arr) => {
             hash[item] = 1;
         } else {
             if (hash[item] === 1) {
-                dublicates.push(item);
+                duplicates.push(item);
             }
             hash[item]++;
         }
@@ -15,4 +15,4 @@ const dublicatesInArray = (arr) => {
     return dublicates;
 };
 
-console.log(dublicatesInArray([1, 5, 3, 5, 67, 67, 100, 1, 4, 5, 67, 67]));
+console.log(duplicatesInArray([1, 5, 3, 5, 67, 67, 100, 1, 4, 5, 67, 67]));
