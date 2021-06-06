@@ -1,4 +1,4 @@
-/* Given n. Find nth fibonacci
+/* Given n. Find nth fibonacci. Bottom Up
 
 Fibonacci Example
 
@@ -21,3 +21,21 @@ const nthFibonacci = (n) => {
 };
 
 console.log(nthFibonacci(10));
+
+/* Top down */
+
+const nthFibonacci1 = (n) => {
+    let result;
+
+    let searchFib = (index) => {
+        if (index < 2) {
+            return index;
+        } else {
+            return searchFib(index - 2) + searchFib(index - 1);
+        }
+    };
+    result = searchFib(n);
+    return result;
+};
+
+console.log(nthFibonacci1(10));
