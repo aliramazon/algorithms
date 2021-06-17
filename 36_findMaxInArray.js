@@ -39,7 +39,7 @@ const maxNumberDynamic = (arr) => {
     console.log("recursion");
     if (arr.length === 1) return arr[0];
 
-    const maxOfRemainder = maxNumberRecursive(arr.slice(1));
+    const maxOfRemainder = maxNumberDynamic(arr.slice(1));
 
     if (arr[0] > maxOfRemainder) {
         return arr[0];
