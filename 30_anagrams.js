@@ -1,3 +1,4 @@
+/* All Anagrams of String */
 const anagrams1 = (string) => {
     let createAnagrams = (string) => {
         let anagrams = [];
@@ -40,3 +41,41 @@ const anagrams = (string) => {
 };
 
 console.log(anagrams("abc"));
+
+/* Check if two strings anagrams */
+
+// O(N + M) Time complexity.
+// O(N + M) Space
+
+const isAnagram = (str1, str2) => {
+    let str1Chars = {};
+    let str2Chars = {};
+
+    let countChars = (hash, str) => {
+        for (let char of str) {
+            if (!hash[char]) {
+                hash[char] = 1;
+            } else {
+                hash[char]++;
+            }
+        }
+    };
+    countChars(str1Chars, str1);
+    countChars(str2Chars, str2);
+
+    for (let key in str1Chars) {
+        if (str1Chars[key] !== str2Chars[key]) {
+            return false;
+        }
+    }
+    for (let key in str2Chars) {
+        if (str2Chars[key] !== str1Chars[key]) {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+console.log(isAnagram("abcdd", "ddabca"));
+console.log(isAnagram("aaaab", "baaaa"));
