@@ -28,74 +28,74 @@ We definetely need to pass grid this.size.   3, 4, 5 ...
 class TicTacToe {
     constructor(size) {
         this.size = size;
-        this.lines = [];
+        this.winCases = [];
     }
 
-    generateHorizontalWinLines() {
-        let line = [];
+    #generateHorizontalWinCases() {
+        let winCase = [];
 
         for (let i = 0; i < this.size ** 2; i++) {
-            line.push(i);
-            if (line.length === this.size) {
-                this.lines.push(line);
-                line = [];
+            winCase.push(i);
+            if (winCase.length === this.size) {
+                this.winCases.push(winCase);
+                winCase = [];
             }
         }
     }
 
-    generateVerticalWinLines() {
-        let line = [];
+    #generateVerticalWinCases() {
+        let winCase = [];
         for (let j = 0; j < this.size; j++) {
             let acc = j;
 
-            while (line.length < this.size) {
-                line.push(acc);
+            while (winCase.length < this.size) {
+                winCase.push(acc);
                 acc += this.size;
             }
-            this.lines.push(line);
-            line = [];
+            this.winCases.push(winCase);
+            winCase = [];
         }
     }
 
-    generateDiagonalLines() {
+    #generateDiagonalWinCases() {
         let acc = 0;
-        let line = [];
+        let winCase = [];
 
-        while (line.length < this.size) {
-            line.push(acc);
+        while (winCase.length < this.size) {
+            winCase.push(acc);
             acc += this.size + 1;
         }
-        this.lines.push(line);
+        this.winCases.push(winCase);
 
-        line = [];
+        winCase = [];
         acc = this.size - 1;
 
-        while (line.length < this.size) {
-            line.push(acc);
+        while (winCase.length < this.size) {
+            winCase.push(acc);
             acc += this.size - 1;
         }
-        this.lines.push(line);
-        line = [];
+        this.winCases.push(winCase);
+        winCase = [];
     }
 
-    calculateAllWinLines() {
-        this.generateHorizontalWinLines();
-        this.generateVerticalWinLines();
-        this.generateDiagonalLines();
+    #generateAllWinCases() {
+        this.winCases = [];
+        this.#generateHorizontalWinCases();
+        this.#generateVerticalWinCases();
+        this.#generateDiagonalWinCases();
     }
 
-    winLines() {
-        this.lines = [];
-        this.calculateAllWinLines();
-        return this.lines;
+    #getAllWinCases() {
+        this.#generateAllWinCases();
+        return this.winCases;
     }
 
     calculateWin(squares) {
-        let winLines = this.winLines();
+        let winCases = this.#getAllWinCases();
 
-        for (let winLine of winLines) {
-            let winUser = squares[winLine[0]];
-            let isWin = winLine.every(
+        for (let winCase of winCases) {
+            let winUser = squares[winCase[0]];
+            let isWin = winCase.every(
                 (index) =>
                     squares[index] === winUser && squares[index] !== undefined
             );
@@ -106,5 +106,9 @@ class TicTacToe {
 }
 
 let game = new TicTacToe(3);
-let squares = ["X", "X", 0, "X", 0, 0, undefined, 0, undefined];
-console.log(game.calculateWin(squares));
+let noOneWins = ["X", "X", 0, "X", 0, 0, undefined, 0, undefined];
+let xWins = ["X", "X", 0, 0, "X", 0, 0, 0, "X"];
+let zeroWins = ["X", "X", 0, "X", 0, 0, 0, undefined, undefined];
+console.log(game.calculateWin(noOneWins));
+console.log(game.calculateWin(xWins));
+console.log(game.calculateWin(zeroWins));
