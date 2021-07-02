@@ -160,17 +160,32 @@ class SinglyLinkedList {
         this.length--;
         return removable;
     }
+    // head                 tail
+    //   1 => 2 => 3 => 4 => 5 => NULL
+    reverse() {
+        if (this.length === 0) {
+            return this;
+        } else {
+            let current = this.head;
+            let prev = null;
+            let nextNode;
+            while (current) {
+                nextNode = current.next;
+                current.next = prev;
+                prev = current;
+                current = nextNode;
+            }
+            [this.head, this.tail] = [this.tail, this.head];
+        }
+        return this;
+    }
 }
 
 let singlyLinkedList = new SinglyLinkedList();
 console.log(singlyLinkedList.push(5));
 console.log(singlyLinkedList.push(4));
-singlyLinkedList.insert(2, "0");
-singlyLinkedList.insert(1, "2");
-console.log("-----");
-
+console.log(singlyLinkedList.push(3));
 console.log(JSON.stringify(singlyLinkedList));
 
-singlyLinkedList.removeAt(2);
-console.log("-----");
+console.log(singlyLinkedList.reverse());
 console.log(JSON.stringify(singlyLinkedList));
