@@ -70,7 +70,6 @@ class SinglyLinkedList {
             this.head = this.tail = newNode;
         } else {
             newNode.next = this.head;
-
             this.head = newNode;
         }
         return ++this.length;
@@ -92,10 +91,59 @@ class SinglyLinkedList {
             }
         }
     }
+
+    set(index, newValue) {
+        if (index < 0 || index >= this.length) return false;
+
+        let current = this.head;
+        let currentIdx = 0;
+        while (currentIdx <= index) {
+            if (currentIdx === index) {
+                current.value = newValue;
+                return true;
+            }
+            current = current.next;
+            currentIdx++;
+        }
+    }
+
+    insert(index, value) {
+        if (index < 0 || index > this.length) return;
+
+        let newNode = this.#newNode(value);
+
+        if (this.length === 0) {
+            this.head = this.tail = newNode;
+        } else if (index === 0) {
+            newNode.next = this.head;
+            this.head = newNode;
+        } else if (index === this.length) {
+            this.tail.next = newNode;
+            this.tail = newNode;
+        } else {
+            let currentIdx = 0;
+            let prevNode = this.head;
+
+            while (currentIdx < index - 1) {
+                prevNode = prevNode.next;
+                currentIdx++;
+            }
+
+            newNode.next = prevNode.next;
+            prevNode.next = newNode;
+        }
+        return ++this.length;
+    }
 }
 
 let singlyLinkedList = new SinglyLinkedList();
-// console.log(singlyLinkedList.push(5));
-// console.log(singlyLinkedList.push(4));
-console.log(singlyLinkedList.unshift(1));
-console.log(singlyLinkedList.get(1));
+console.log(singlyLinkedList.push(5));
+console.log(singlyLinkedList.push(4));
+
+console.log(JSON.stringify(singlyLinkedList));
+singlyLinkedList.insert(2, "0");
+console.log(JSON.stringify(singlyLinkedList));
+singlyLinkedList.insert(1, "2");
+console.log("-----");
+
+console.log(JSON.stringify(singlyLinkedList));
