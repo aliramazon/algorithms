@@ -49,15 +49,53 @@ class SinglyLinkedList {
             return popped;
         }
     }
+
+    shift() {
+        if (this.length === 0) return undefined;
+
+        let shifted = this.head;
+        if (this.length === 1) {
+            this.head = this.tail = null;
+        } else {
+            this.head = this.head.next;
+        }
+        this.length--;
+        return shifted;
+    }
+
+    unshift(value) {
+        let newNode = this.#newNode(value);
+
+        if (this.length === 0) {
+            this.head = this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+
+            this.head = newNode;
+        }
+        return ++this.length;
+    }
+
+    get(index) {
+        if (index < 0 || index >= this.length) {
+            return undefined;
+        } else {
+            let currentNode = this.head;
+            let currentIndex = 0;
+
+            while (currentIndex <= index) {
+                if (currentIndex === index) {
+                    return currentNode;
+                }
+                currentNode = currentNode.next;
+                currentIndex++;
+            }
+        }
+    }
 }
 
 let singlyLinkedList = new SinglyLinkedList();
-console.log(singlyLinkedList.push(5));
-console.log(singlyLinkedList.push(11));
-console.log(singlyLinkedList.push(10));
 // console.log(singlyLinkedList.push(5));
-console.log(JSON.stringify(singlyLinkedList));
-console.log(singlyLinkedList.pop());
-console.log(singlyLinkedList.pop());
-console.log(singlyLinkedList.pop());
-console.log(singlyLinkedList);
+// console.log(singlyLinkedList.push(4));
+console.log(singlyLinkedList.unshift(1));
+console.log(singlyLinkedList.get(1));
