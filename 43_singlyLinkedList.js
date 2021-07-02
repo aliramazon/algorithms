@@ -121,12 +121,10 @@ class SinglyLinkedList {
             this.tail.next = newNode;
             this.tail = newNode;
         } else {
-            let currentIdx = 0;
             let prevNode = this.head;
 
-            while (currentIdx < index - 1) {
+            for (let i = 0; i < index - 1; i++) {
                 prevNode = prevNode.next;
-                currentIdx++;
             }
 
             newNode.next = prevNode.next;
@@ -134,16 +132,45 @@ class SinglyLinkedList {
         }
         return ++this.length;
     }
+
+    removeAt(index) {
+        if (index < 0 || index >= this.length) return;
+        let removable;
+        if (index === 0) {
+            removable = this.head;
+            if (this.length === 1) {
+                this.head = this.tail = null;
+            } else {
+                this.head = this.head.next;
+            }
+        } else {
+            let prevNode = this.head;
+            for (let i = 0; i < index - 1; i++) {
+                prevNode = prevNode.next;
+            }
+            removable = prevNode.next;
+
+            if (index === this.length - 1) {
+                prevNode.next = null;
+                this.tail = prevNode;
+            } else {
+                prevNode.next = prevNode.next.next;
+            }
+        }
+        this.length--;
+        return removable;
+    }
 }
 
 let singlyLinkedList = new SinglyLinkedList();
 console.log(singlyLinkedList.push(5));
 console.log(singlyLinkedList.push(4));
-
-console.log(JSON.stringify(singlyLinkedList));
 singlyLinkedList.insert(2, "0");
-console.log(JSON.stringify(singlyLinkedList));
 singlyLinkedList.insert(1, "2");
 console.log("-----");
 
+console.log(JSON.stringify(singlyLinkedList));
+
+singlyLinkedList.removeAt(2);
+console.log("-----");
 console.log(JSON.stringify(singlyLinkedList));
