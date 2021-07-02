@@ -82,13 +82,11 @@ class SinglyLinkedList {
             let currentNode = this.head;
             let currentIndex = 0;
 
-            while (currentIndex <= index) {
-                if (currentIndex === index) {
-                    return currentNode;
-                }
+            while (currentIndex < index) {
                 currentNode = currentNode.next;
                 currentIndex++;
             }
+            return currentNode.value;
         }
     }
 
@@ -185,7 +183,4 @@ let singlyLinkedList = new SinglyLinkedList();
 console.log(singlyLinkedList.push(5));
 console.log(singlyLinkedList.push(4));
 console.log(singlyLinkedList.push(3));
-console.log(JSON.stringify(singlyLinkedList));
-
-console.log(singlyLinkedList.reverse());
-console.log(JSON.stringify(singlyLinkedList));
+console.log(singlyLinkedList.get(5));
