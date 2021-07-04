@@ -201,14 +201,16 @@ class DoublyLinkedList {
     }
 }
 
-let doublyLinkedList = new DoublyLinkedList();
+module.exports = DoublyLinkedList;
 
-doublyLinkedList.push(6);
-doublyLinkedList.push(5);
-doublyLinkedList.push(4);
-doublyLinkedList.push(3);
-doublyLinkedList.push(2);
+// let doublyLinkedList = new DoublyLinkedList();
 
-console.log(doublyLinkedList.removeAt(3));
-console.log("-----");
-console.log(doublyLinkedList);
+// doublyLinkedList.push(6);
+// doublyLinkedList.push(5);
+// doublyLinkedList.push(4);
+// doublyLinkedList.push(3);
+// doublyLinkedList.push(2);
+
+// console.log(doublyLinkedList.removeAt(3));
+// console.log("-----");
+// console.log(doublyLinkedList);
