@@ -36,6 +36,19 @@ class BinarySearchTree {
         }
     }
 
+    #lift(nodeToDelete, nodeToDeleteRightChild) {
+        if (nodeToDeleteRightChild.leftChild) {
+            nodeToDeleteRightChild.leftChild = this.#lift(
+                nodeToDelete,
+                nodeToDeleteRightChild.leftChild
+            );
+            return nodeToDeleteRightChild;
+        } else {
+            nodeToDelete.value = nodeToDeleteRightChild.value;
+            return nodeToDeleteRightChild.rightChild;
+        }
+    }
+
     search(value, node = this.root) {
         if (!node || node.value === value) {
             return node;
@@ -66,30 +79,19 @@ class BinarySearchTree {
                 if (!node.rightChild.leftChild) {
                     node.value = node.rightChild.value;
                     node.rightChild = node.rightChild.rightChild;
-
-                    return node;
                 } else {
                     let min = node.rightChild.leftChild;
 
-                    while (min) {
-                        if (!min.leftChild) {
-                            node.value = min.value;
-                            console.log(min);
-                            if (min.rightChild) {
-                                min.value = min.rightChild.value;
-
-                                [min.rightChild, min.leftChild] = [
-                                    min.rightChild.rightChild,
-                                    min.rightChild.leftChild
-                                ];
-                            } else {
-                                this.delete(min.value, node.rightChild);
-                            }
-                            return node;
-                        }
+                    while (min.leftChild) {
                         min = min.leftChild;
                     }
+                    node.value = min.value;
+                    this.delete(min.value, node.rightChild);
                 }
+                return node;
+
+                // node.rightChild = this.#lift(node, node.rightChild);
+                // return node;
             }
         }
     }
@@ -102,13 +104,6 @@ class BinarySearchTree {
                  2         10         22 
                     3        11     21
                                       21.5
-
-
-                             18
-                      7              21
-                    4   8                25
-                 2         10         22 
-                    3        11    21.5
 
 */
 
