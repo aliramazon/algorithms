@@ -95,6 +95,53 @@ class BinarySearchTree {
             }
         }
     }
+
+    inorderDFS(node) {
+        if (!node) return;
+
+        this.inorderDFS(node.leftChild);
+        console.log(node.value);
+        this.inorderDFS(node.rightChild);
+    }
+
+    preorderDFS(node) {
+        if (!node) return;
+
+        console.log(node.value);
+        this.preorderDFS(node.leftChild);
+        this.preorderDFS(node.rightChild);
+    }
+
+    postOrderDFS(node) {
+        if (!node) return;
+
+        this.postOrderDFS(node.leftChild);
+        this.postOrderDFS(node.rightChild);
+        console.log(node.value);
+    }
+
+    traverseDFS() {
+        if (!this.root) return;
+        let queue = [];
+        let output = [];
+        queue.unshift(this.root);
+
+        while (queue.length) {
+            let dequeued = queue.pop();
+            console.log(dequeued);
+
+            if (dequeued.leftChild) {
+                queue.unshift(dequeued.leftChild);
+            }
+            if (dequeued.rightChild) {
+                queue.unshift(dequeued.rightChild);
+            }
+
+            output.push(dequeued.value);
+        }
+
+        return output;
+    }
 }
 
 /*
@@ -108,21 +155,32 @@ class BinarySearchTree {
 */
 
 let bst = new BinarySearchTree();
+let seq = [15, 10, 9, 12, 11, 14, 8, 9.5, 19, 18, 21, 17, 18.5, 20, 22];
 
-bst.add(15);
-bst.add(7);
-bst.add(4);
-bst.add(8);
-bst.add(10);
-bst.add(20);
-bst.add(25);
-bst.add(22);
-bst.add(21);
-bst.add(21.5);
-bst.add(18);
+for (let val of seq) {
+    bst.add(val);
+}
 
-bst.add(11);
-bst.add(2);
-bst.add(3);
+// bst.preorderDFS(bst.root);
+// console.log("---");
+// bst.inorderDFS(bst.root);
+// console.log("---");
+// bst.postOrderDFS(bst.root);
 
-bst.delete(20);
+console.log(bst.traverseDFS());
+
+// bst.add(15);
+// bst.add(7);
+// bst.add(4);
+// bst.add(8);
+// bst.add(10);
+// bst.add(20);
+// bst.add(25);
+// bst.add(22);
+// bst.add(21);
+// bst.add(21.5);
+// bst.add(18);
+
+// bst.add(11);
+// bst.add(2);
+// bst.add(3);
