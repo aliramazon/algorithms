@@ -6,15 +6,15 @@ class Queue {
     }
 
     enqueue(element) {
-        this.data.unshift(element);
+        this.data.push(element);
     }
 
     dequeue() {
-        return this.data.pop();
+        return this.data.shift();
     }
 
     read() {
-        return this.data.tail ? this.data.tail.value : null;
+        return this.data.head ? this.data.head.value : null;
     }
 }
 
