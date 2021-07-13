@@ -158,6 +158,32 @@ class SinglyLinkedList {
         this.length--;
         return removable;
     }
+    remove(data) {
+        if (this.length === 0) {
+            return undefined;
+        } else {
+            if (this.head.value === data) {
+                this.head = this.head.next;
+                this.length--;
+                return true;
+            } else {
+                let current = this.head;
+                while (current) {
+                    if (current.next.value === data) {
+                        current.next = current.next.next;
+                        if (current.next === null) {
+                            this.tail = current;
+                        }
+                        this.length--;
+                        return true;
+                    }
+                    current = current.next;
+                }
+            }
+        }
+        return false;
+    }
+
     // head                 tail
     //   1 => 2 => 3 => 4 => 5 => NULL
     reverse() {
