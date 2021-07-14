@@ -162,12 +162,12 @@ class SinglyLinkedList {
         if (this.length === 0) {
             return undefined;
         } else {
-            if (this.head.value === data) {
-                this.head = this.head.next;
+            let current = this.head;
+            if (current.value === data) {
+                this.head = current.next;
                 this.length--;
                 return true;
             } else {
-                let current = this.head;
                 while (current) {
                     if (current.next.value === data) {
                         current.next = current.next.next;
