@@ -12,7 +12,7 @@ const duplicatesInArray = (arr) => {
             hash[item]++;
         }
     }
-    return dublicates;
+    return duplicates;
 };
 
 console.log(duplicatesInArray([1, 5, 3, 5, 67, 67, 100, 1, 4, 5, 67, 67]));

@@ -1,0 +1,55 @@
+class BinaryMaxHeap {
+    #data;
+    constructor() {
+        this.#data = [];
+    }
+
+    get rootNode() {
+        return this.#data[0];
+    }
+
+    get lastNode() {
+        let length = this.#data.length;
+
+        return length === 0 ? undefined : this.#data[length - 1];
+    }
+
+    get #length() {
+        return this.#data.length;
+    }
+
+    #rightChildIndex(index) {
+        return index * 2 + 2;
+    }
+
+    #leftChildIndex(index) {
+        return index * 2 + 1;
+    }
+
+    #parentIndex(index) {
+        return Math.floor((index - 1) / 2);
+    }
+
+    printData() {
+        console.log(this.#data);
+    }
+
+    insert(value) {
+        this.#data.push(value);
+        let newNodeIndex = this.#length - 1;
+        let parentIndex = this.#parentIndex(newNodeIndex);
+
+        while (
+            this.#data[newNodeIndex] > this.#data[parentIndex] &&
+            newNodeIndex > 0
+        ) {
+            [this.#data[newNodeIndex], this.#data[parentIndex]] = [
+                this.#data[parentIndex],
+                this.#data[newNodeIndex]
+            ];
+
+            newNodeIndex = parentIndex;
+            parentIndex = this.#parentIndex(newNodeIndex);
+        }
+    }
+}
