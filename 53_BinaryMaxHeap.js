@@ -52,4 +52,42 @@ class BinaryMaxHeap {
             parentIndex = this.#parentIndex(newNodeIndex);
         }
     }
+
+    #calculateLargerChildIndex(trickleNodeIndex) {
+        let leftChildIndex = this.#leftChildIndex(trickleNodeIndex);
+        let rightChildIndex = this.#rightChildIndex(trickleNodeIndex);
+
+        if (
+            this.#data[rightChildIndex] &&
+            this.#data[rightChildIndex] > this.#data[leftChildIndex]
+        ) {
+            return rightChildIndex;
+        } else {
+            return leftChildIndex;
+        }
+    }
+
+    delete() {
+        if (this.#length === 1) {
+            this.#data.pop();
+            return;
+        }
+        this.#data[0] = this.#data.pop();
+        let trickleNodeIndex = 0;
+        let leftChildIndex = this.#leftChildIndex(trickleNodeIndex);
+
+        while (this.#data[leftChildIndex]) {
+            let largerChildIndex =
+                this.#calculateLargerChildIndex(trickleNodeIndex);
+
+            if (this.#data[largerChildIndex] < this.#data[trickleNodeIndex])
+                return;
+            [this.#data[trickleNodeIndex], this.#data[largerChildIndex]] = [
+                this.#data[largerChildIndex],
+                this.#data[trickleNodeIndex]
+            ];
+            trickleNodeIndex = largerChildIndex;
+            leftChildIndex = this.#leftChildIndex(largerChildIndex);
+        }
+    }
 }
