@@ -68,9 +68,9 @@ class BinaryMaxHeap {
     }
 
     delete() {
-        if (this.#length === 1) {
-            this.#data.pop();
-            return;
+        let largestValue = this.rootNode;
+        if (this.#length <= 1) {
+            return this.#data.pop();
         }
         this.#data[0] = this.#data.pop();
         let trickleNodeIndex = 0;
@@ -89,5 +89,6 @@ class BinaryMaxHeap {
             trickleNodeIndex = largerChildIndex;
             leftChildIndex = this.#leftChildIndex(largerChildIndex);
         }
+        return largestValue;
     }
 }
