@@ -81,7 +81,7 @@ class BinaryMaxHeap {
                 this.#calculateLargerChildIndex(trickleNodeIndex);
 
             if (this.#data[largerChildIndex] < this.#data[trickleNodeIndex])
-                return;
+                break;
             [this.#data[trickleNodeIndex], this.#data[largerChildIndex]] = [
                 this.#data[largerChildIndex],
                 this.#data[trickleNodeIndex]
