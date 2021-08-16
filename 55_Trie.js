@@ -10,6 +10,10 @@ class Trie {
         this.#root = new TrieNode();
     }
 
+    get root() {
+        return this.#root;
+    }
+
     insert(word) {
         let currentNode = this.#root;
 
@@ -38,3 +42,5 @@ class Trie {
         return currentNode;
     }
 }
+
+module.exports = Trie;
