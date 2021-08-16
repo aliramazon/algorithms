@@ -1,7 +1,7 @@
 const Trie = require("./55_Trie");
 
 class AutoComplete extends Trie {
-    #collectAllWords(node = super.root) {
+    #collectAllWords(node = this.root) {
         let words = [];
 
         const traverseTrie = (node, acc) => {
@@ -18,30 +18,39 @@ class AutoComplete extends Trie {
     }
 
     autocomplete(text) {
-        let currentNode = super.search(text);
+        let currentNode = this.search(text);
         if (!currentNode) return [];
         return this.#collectAllWords(currentNode).map(
             (partial) => text + partial
         );
+    }
+
+    printAllChars(node = this.root) {
+        if (!node) return;
+        for (let char in node.children) {
+            console.log(char);
+            this.printAllChars(node.children[char]);
+        }
     }
 }
 
 let autocomplete = new AutoComplete();
 let words = [
     "accent",
-    "acc",
-    "accept",
-    "accenture",
-    "cat",
-    "can",
-    "cannot",
-    "capital",
-    "curry",
-    "auto"
+    "acc"
+    // "accept",
+    // "accenture",
+    // "cat",
+    // "can",
+    // "cannot",
+    // "capital",
+    // "curry",
+    // "auto"
 ];
 
 for (let word of words) {
     autocomplete.insert(word);
 }
 
-console.log(autocomplete.autocomplete("acce"));
+autocomplete.printAllChars();
+console.log(autocomplete.autocomplete("acc"));
