@@ -17,12 +17,26 @@ class AutoComplete extends Trie {
         return words;
     }
 
-    autocomplete(text) {
+    autoComplete(text) {
         let currentNode = this.search(text);
         if (!currentNode) return [];
-        return this.#collectAllWords(currentNode).map(
-            (partial) => text + partial
-        );
+        return this.#collectAllWords(currentNode);
+    }
+
+    autoCorrect(text) {
+        let longestPrefix = "";
+        let currentNode = this.root;
+
+        for (let char of text) {
+            if (currentNode.children[char]) {
+                longestPrefix += char;
+                currentNode = currentNode.children[char];
+            } else {
+                return longestPrefix + this.#collectAllWords(currentNode)[0];
+            }
+        }
+
+        return text;
     }
 
     printAllChars(node = this.root) {
@@ -37,20 +51,21 @@ class AutoComplete extends Trie {
 let autocomplete = new AutoComplete();
 let words = [
     "accent",
-    "acc"
-    // "accept",
-    // "accenture",
-    // "cat",
-    // "can",
-    // "cannot",
-    // "capital",
-    // "curry",
-    // "auto"
+    "acc",
+    "accept",
+    "accenture",
+    "cat",
+    "can",
+    "cannot",
+    "capital",
+    "curry",
+    "auto"
 ];
 
 for (let word of words) {
     autocomplete.insert(word);
 }
 
-autocomplete.printAllChars();
-console.log(autocomplete.autocomplete("acc"));
+console.log(autocomplete.autoCorrect("accepr"));
+console.log(autocomplete.autoCorrect("accet"));
+console.log(autocomplete.autoCorrect("canna"));
