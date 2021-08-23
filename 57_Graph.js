@@ -24,8 +24,8 @@ class Vertex {
     }
 }
 const Direction = {
-    DIRECTED,
-    UNDIRECTED
+    DIRECTED: "DIRECTED",
+    UNDIRECTED: "UNDIRECTED"
 };
 class Graph {
     constructor(edgeDirection = Direction.DIRECTED) {
@@ -77,10 +77,31 @@ class Graph {
             }
         }
     }
+
+    depthFirstTraverse(startVertex) {
+        let map = new Map();
+
+        const traverse = (vertex) => {
+            if (!map.has(vertex.value)) {
+                map.set(vertex.value, vertex);
+                console.log(vertex.value);
+                for (let [_, adjacentVertex] of vertex.adjacentVertices) {
+                    traverse(adjacentVertex);
+                }
+            }
+        };
+        traverse(startVertex);
+    }
 }
 
 let graph = new Graph(Direction.UNDIRECTED);
+graph.addEdge("elice", "sultan");
 graph.addEdge("elice", "fred");
 graph.addEdge("fred", "diana");
 graph.addEdge("alice", "fred");
 graph.addEdge("alice", "diana");
+graph.addEdge("diana", "ali");
+graph.addEdge("ali", "gina");
+graph.addEdge("alice", "love");
+
+graph.depthFirstTraverse(graph.vertices.get("elice"));
