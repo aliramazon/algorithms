@@ -82,15 +82,38 @@ class Graph {
         let map = new Map();
 
         const traverse = (vertex) => {
-            if (!map.has(vertex.value)) {
-                map.set(vertex.value, vertex);
-                console.log(vertex.value);
-                for (let [_, adjacentVertex] of vertex.adjacentVertices) {
-                    traverse(adjacentVertex);
-                }
+            if (map.has(vertex.value)) return;
+            map.set(vertex.value, vertex);
+            console.log(vertex.value);
+            for (let [_, adjacentVertex] of vertex.adjacentVertices) {
+                traverse(adjacentVertex);
             }
         };
         traverse(startVertex);
+    }
+
+    depthFirstSearch(startVertex, searchValue) {
+        let hash = new Map();
+        let foundVertex = null;
+
+        const search = (vertex) => {
+            if (vertex.value === searchValue) {
+                foundVertex = vertex;
+                return;
+            }
+            hash.set(vertex.value, vertex);
+
+            for (let [_, adjacentVertex] of vertex.adjacentVertices) {
+                if (foundVertex) {
+                    return; // It prevents unnecessary loop
+                }
+                if (hash.has(adjacentVertex.value)) continue; // It prevents infinite loop and serves as base case as well.
+
+                search(adjacentVertex);
+            }
+        };
+        search(startVertex);
+        return foundVertex;
     }
 }
 
@@ -99,9 +122,21 @@ graph.addEdge("elice", "sultan");
 graph.addEdge("elice", "fred");
 graph.addEdge("fred", "diana");
 graph.addEdge("alice", "fred");
+graph.addEdge("alice", "love");
 graph.addEdge("alice", "diana");
 graph.addEdge("diana", "ali");
 graph.addEdge("ali", "gina");
-graph.addEdge("alice", "love");
 
-graph.depthFirstTraverse(graph.vertices.get("elice"));
+/* {
+    elice: ["sultan", "fred"],
+    sultan: ["elice"],
+    fred: ["elice", "diana", "alice"],
+    diana: ["fred", "alice", "ali"],
+    alice: ["fred", "love", "diana"],
+    love: ["alice"],
+    ali: ["diana", "gina"],
+    gina: ["ali"]
+
+}*/
+
+console.log(graph.depthFirstSearch(graph.vertices.get("alice"), "love"));
