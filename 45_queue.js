@@ -10,17 +10,16 @@ class Queue {
     }
 
     dequeue() {
-        return this.data.shift();
+        return this.data.shift().value;
     }
 
     read() {
         return this.data.head ? this.data.head.value : null;
     }
+
+    get length() {
+        return this.data.length;
+    }
 }
 
-let queue = new Queue();
-
-queue.enqueue(5);
-queue.enqueue(4);
-queue.enqueue(3);
-queue.dequeue();
+module.exports = Queue;
