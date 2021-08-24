@@ -1,3 +1,4 @@
+const Queue = require("./45_Queue.js");
 class Vertex {
     #adjacentVertices;
     constructor(value) {
@@ -79,11 +80,11 @@ class Graph {
     }
 
     depthFirstTraverse(startVertex) {
-        let map = new Map();
+        let visitedVertices = new Map();
 
         const traverse = (vertex) => {
-            if (map.has(vertex.value)) return;
-            map.set(vertex.value, vertex);
+            if (visitedVertices.has(vertex.value)) return;
+            visitedVertices.set(vertex.value, vertex);
             console.log(vertex.value);
             for (let [_, adjacentVertex] of vertex.adjacentVertices) {
                 traverse(adjacentVertex);
@@ -93,7 +94,7 @@ class Graph {
     }
 
     depthFirstSearch(startVertex, searchValue) {
-        let hash = new Map();
+        let visitedVertices = new Map();
         let foundVertex = null;
 
         const search = (vertex) => {
@@ -101,19 +102,42 @@ class Graph {
                 foundVertex = vertex;
                 return;
             }
-            hash.set(vertex.value, vertex);
+            visitedVertices.set(vertex.value, vertex);
 
             for (let [_, adjacentVertex] of vertex.adjacentVertices) {
                 if (foundVertex) {
                     return; // It prevents unnecessary loop
                 }
-                if (hash.has(adjacentVertex.value)) continue; // It prevents infinite loop and serves as base case as well.
+                if (visitedVertices.has(adjacentVertex.value)) continue; // It prevents infinite loop and serves as base case as well.
 
                 search(adjacentVertex);
             }
         };
         search(startVertex);
         return foundVertex;
+    }
+
+    breadthFirstTraverse(startVertex) {
+        let queue = new Queue();
+        let visitedVertices = {};
+        let output = [];
+        queue.enqueue(startVertex);
+
+        while (queue.length) {
+            let dequeued = queue.dequeue();
+            visitedVertices[dequeued.value] = true;
+            console.log(dequeued.value);
+
+            for (let [key, adjacentVertex] of dequeued.adjacentVertices) {
+                if (!visitedVertices[key]) {
+                    queue.enqueue(adjacentVertex);
+                    visitedVertices[adjacentVertex.value] = true;
+                }
+            }
+            output.push(dequeued.value);
+        }
+        console.log(visitedVertices);
+        return output;
     }
 }
 
@@ -139,4 +163,4 @@ graph.addEdge("ali", "gina");
 
 }*/
 
-console.log(graph.depthFirstSearch(graph.vertices.get("alice"), "love"));
+console.log(graph.breadthFirstTraverse(graph.vertices.get("alice")));
