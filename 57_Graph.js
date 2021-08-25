@@ -121,22 +121,21 @@ class Graph {
         let queue = new Queue();
         let visitedVertices = {};
         let output = [];
+        visitedVertices[startVertex.value] = true;
         queue.enqueue(startVertex);
 
         while (queue.length) {
             let dequeued = queue.dequeue();
-            visitedVertices[dequeued.value] = true;
             console.log(dequeued.value);
 
             for (let [key, adjacentVertex] of dequeued.adjacentVertices) {
                 if (!visitedVertices[key]) {
-                    queue.enqueue(adjacentVertex);
                     visitedVertices[adjacentVertex.value] = true;
+                    queue.enqueue(adjacentVertex);
                 }
             }
             output.push(dequeued.value);
         }
-        console.log(visitedVertices);
         return output;
     }
 }
@@ -163,4 +162,4 @@ graph.addEdge("ali", "gina");
 
 }*/
 
-console.log(graph.breadthFirstTraverse(graph.vertices.get("alice")));
+console.log(graph.breadthFirstTraverse(graph.vertices.get("gina")));
