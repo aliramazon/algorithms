@@ -46,7 +46,7 @@ class Graph {
     removeVertex(value) {
         let current = this.vertices.get(value);
 
-        if (current && this.edgeDirection === Direction.UNDIRECTED) {
+        if (current) {
             for (let [value, vertex] of this.vertices) {
                 vertex.removeAdjacent(current);
             }
