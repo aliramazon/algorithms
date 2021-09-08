@@ -30,7 +30,7 @@ class WeightedGraph {
     }
 
     addVertex(value) {
-        if (this.vertices.get(value)) {
+        if (this.vertices.has(value)) {
             return this.vertices.get(value);
         }
 
@@ -54,7 +54,7 @@ class WeightedGraph {
         let sourceVertex = this.addVertex(source);
         let destinationVertex = this.addVertex(destination);
 
-        sourceVertex.addAdjacent(destination, weight);
+        sourceVertex.addAdjacent(destinationVertex, weight);
         if (this.edgeDirection === Direction.UNDIRECTED) {
             destinationVertex.addAdjacent(sourceVertex, weight);
         }
@@ -72,4 +72,9 @@ class WeightedGraph {
             }
         }
     }
+
+    getVertex(value) {
+        return this.vertices.get(value);
+    }
 }
+module.exports = WeightedGraph;
