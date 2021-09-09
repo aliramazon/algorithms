@@ -25,6 +25,8 @@ const findCheapestPath = (origin, destination) => {
         return "Origin is not found";
     }
 
+    if (!destination) return "Destination is not found";
+
     let currentPlace = origin;
 
     while (currentPlace) {
@@ -64,9 +66,25 @@ const findCheapestPath = (origin, destination) => {
         currentPlace = nextCheapestPlace;
     }
 
-    return cheapestPrices.get(destination.value);
+    if (!cheapestPrices.has(destination.value)) {
+        return "There is no flight to your destination";
+    }
+
+    let path = [];
+    let currentCityName = destination.value;
+
+    while (currentCityName !== origin.value) {
+        path.push(currentCityName);
+        currentCityName = layover.get(currentCityName);
+    }
+    path.push(origin.value);
+
+    return {
+        path: path.reverse(),
+        price: cheapestPrices.get(destination.value)
+    };
 };
 
 console.log(
-    findCheapestPath(graph.getVertex("Chicago"), graph.getVertex("Denver"))
+    findCheapestPath(graph.getVertex("Boston"), graph.getVertex("El Paso"))
 );
