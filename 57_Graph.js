@@ -138,6 +138,27 @@ class Graph {
         }
         return output;
     }
+
+    breadthFirstSearch(startVertex, searchValue) {
+        let queue = new Queue();
+        let visitedVertices = {};
+        visitedVertices[startVertex.value] = true;
+        queue.enqueue(startVertex);
+
+        while (queue.length) {
+            let dequeued = queue.dequeue();
+            if (dequeued.value === searchValue) return dequeued;
+
+            for (let [key, adjacentVertex] of dequeued.adjacentVertices) {
+                if (!visitedVertices[key]) {
+                    visitedVertices[key] = true;
+                    queue.enqueue(adjacentVertex);
+                }
+            }
+        }
+
+        return null;
+    }
 }
 
 let graph = new Graph(Direction.UNDIRECTED);
@@ -162,4 +183,6 @@ graph.addEdge("ali", "gina");
 
 }*/
 
-console.log(graph.breadthFirstTraverse(graph.vertices.get("gina")));
+// console.log(graph.breadthFirstTraverse(graph.vertices.get("gina")));
+console.log(graph.depthFirstSearch(graph.vertices.get("fred"), "alice"));
+console.log(graph.breadthFirstSearch(graph.vertices.get("fred"), "diana"));
