@@ -161,28 +161,30 @@ class Graph {
     }
 }
 
-let graph = new Graph(Direction.UNDIRECTED);
-graph.addEdge("elice", "sultan");
-graph.addEdge("elice", "fred");
-graph.addEdge("fred", "diana");
-graph.addEdge("alice", "fred");
-graph.addEdge("alice", "love");
-graph.addEdge("alice", "diana");
-graph.addEdge("diana", "ali");
-graph.addEdge("ali", "gina");
+module.exports = Graph;
 
-/* {
-    elice: ["sultan", "fred"],
-    sultan: ["elice"],
-    fred: ["elice", "diana", "alice"],
-    diana: ["fred", "alice", "ali"],
-    alice: ["fred", "love", "diana"],
-    love: ["alice"],
-    ali: ["diana", "gina"],
-    gina: ["ali"]
+// let graph = new Graph(Direction.UNDIRECTED);
+// graph.addEdge("elice", "sultan");
+// graph.addEdge("elice", "fred");
+// graph.addEdge("fred", "diana");
+// graph.addEdge("alice", "fred");
+// graph.addEdge("alice", "love");
+// graph.addEdge("alice", "diana");
+// graph.addEdge("diana", "ali");
+// graph.addEdge("ali", "gina");
 
-}*/
+// /* {
+//     elice: ["sultan", "fred"],
+//     sultan: ["elice"],
+//     fred: ["elice", "diana", "alice"],
+//     diana: ["fred", "alice", "ali"],
+//     alice: ["fred", "love", "diana"],
+//     love: ["alice"],
+//     ali: ["diana", "gina"],
+//     gina: ["ali"]
 
-// console.log(graph.breadthFirstTraverse(graph.vertices.get("gina")));
-console.log(graph.depthFirstSearch(graph.vertices.get("fred"), "alice"));
-console.log(graph.breadthFirstSearch(graph.vertices.get("fred"), "diana"));
+// }*/
+
+// // console.log(graph.breadthFirstTraverse(graph.vertices.get("gina")));
+// console.log(graph.depthFirstSearch(graph.vertices.get("fred"), "alice"));
+// console.log(graph.breadthFirstSearch(graph.vertices.get("fred"), "diana"));
