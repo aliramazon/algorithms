@@ -29,3 +29,5 @@ console.log(
 console.log(
     longestSequenceLength([1, 3, 2, 5, 8, 10, 13, 4, 6, 9, 10, 11, 12, 13, 14])
 );
+
+console.log(longestSequenceLength([1, 2, 4, 6, 5]));
