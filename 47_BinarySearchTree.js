@@ -80,13 +80,15 @@ class BinarySearchTree {
                     node.value = node.rightChild.value;
                     node.rightChild = node.rightChild.rightChild;
                 } else {
+                    let parentMinNode = node.rightChild;
                     let min = node.rightChild.leftChild;
 
                     while (min.leftChild) {
+                        parentMinNode = min;
                         min = min.leftChild;
                     }
                     node.value = min.value;
-                    this.delete(min.value, node.rightChild);
+                    this.delete(min.value, parentMinNode);
                 }
                 return node;
 
