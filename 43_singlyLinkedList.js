@@ -29,23 +29,20 @@ class SinglyLinkedList {
     }
 
     pop() {
-        let popped;
-        if (this.length === 0) {
-            return undefined;
+        let popped = this.tail;
+        if (!popped) return undefined;
+
+        if (this.length === 1) {
+            this.head = this.tail = null;
         } else {
-            popped = this.tail;
-            if (this.length === 1) {
-                this.head = this.tail = null;
-            } else {
-                let current = this.head;
-                while (current.next.next) {
-                    current = current.next;
-                }
-                current.next = null;
-                this.tail = current;
+            let current = this.head;
+            while (current.next.next) {
+                current = current.next;
             }
+            current.next = null;
+            this.tail = current;
         }
-        this.length--;
+
         return popped;
     }
 
