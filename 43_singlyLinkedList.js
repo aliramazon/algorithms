@@ -176,29 +176,18 @@ class SinglyLinkedList {
         return true;
     }
 
-    // head                 tail
-    //   1 => 2 => 3 => 4 => 5 => NULL
     reverse() {
-        if (this.length === 0) {
-            return this;
-        } else {
-            let current = this.head;
-            let prev = null;
-            let nextNode;
-            while (current) {
-                nextNode = current.next;
-                current.next = prev;
-                prev = current;
-                current = nextNode;
-            }
-            [this.head, this.tail] = [this.tail, this.head];
+        let current = this.head;
+        let prev = null;
+        let nextNode;
+
+        while (current) {
+            nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
         }
+        [this.head, this.tail] = [this.tail, this.head];
         return this;
     }
 }
-
-let singlyLinkedList = new SinglyLinkedList();
-console.log(singlyLinkedList.push(5));
-console.log(singlyLinkedList.push(4));
-console.log(singlyLinkedList.push(3));
-console.log(singlyLinkedList.get(5));
