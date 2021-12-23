@@ -42,6 +42,7 @@ class SinglyLinkedList {
             current.next = null;
             this.tail = current;
         }
+        this.length--;
 
         return popped;
     }
@@ -154,30 +155,25 @@ class SinglyLinkedList {
         this.length--;
         return removable;
     }
-    remove(data) {
-        if (this.length === 0) {
-            return undefined;
+    remove(value) {
+        let current = this.head;
+        if (!current) return false;
+
+        if (current.value === value) {
+            this.shift();
+            return true;
         } else {
-            let current = this.head;
-            if (current.value === data) {
-                this.head = current.next;
-                this.length--;
-                return true;
-            } else {
-                while (current) {
-                    if (current.next.value === data) {
-                        current.next = current.next.next;
-                        if (current.next === null) {
-                            this.tail = current;
-                        }
-                        this.length--;
-                        return true;
-                    }
-                    current = current.next;
-                }
+            while (current.next && current.next.value !== value) {
+                current = current.next;
             }
+            if (!current.next) return false;
+            current.next = current.next.next;
+            if (!current.next) {
+                this.tail = current;
+            }
+            this.length--;
         }
-        return false;
+        return true;
     }
 
     // head                 tail
