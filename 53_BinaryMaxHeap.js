@@ -3,91 +3,88 @@ class BinaryMaxHeap {
     constructor() {
         this.#data = [];
     }
-
-    get rootNode() {
-        return this.#data[0];
-    }
-
-    get lastNode() {
-        let length = this.#data.length;
-
-        return length === 0 ? undefined : this.#data[length - 1];
-    }
-
-    get #length() {
+    get length() {
         return this.#data.length;
     }
 
-    #rightChildIndex(index) {
-        return index * 2 + 2;
+    get root() {
+        return this.#data[0];
     }
 
-    #leftChildIndex(index) {
-        return index * 2 + 1;
+    get #lastNode() {
+        return this.#data[this.length - 1];
     }
 
-    #parentIndex(index) {
-        return Math.floor((index - 1) / 2);
+    #leftChildIdx(parentIdx) {
+        return parentIdx * 2 + 1;
     }
 
-    printData() {
-        console.log(this.#data);
+    #rightChildIdx(parentIdx) {
+        return parentIdx * 2 + 2;
+    }
+
+    #parentIdx(childIdx) {
+        return Math.floor((childIdx - 1) / 2);
+    }
+
+    #calculateLargerChildIdx(trickleNodeIdx) {
+        let leftChildIdx = this.#leftChildIdx(trickleNodeIdx);
+        let rightChildIdx = this.#rightChildIdx(trickleNodeIdx);
+        let finalCompareIdx;
+
+        if (
+            (this.#data[rightChildIdx] || this.#data[rightChildIdx] === 0) &&
+            this.#data[rightChildIdx] > this.#data[leftChildIdx]
+        ) {
+            finalCompareIdx = rightChildIdx;
+        } else {
+            finalCompareIdx = leftChildIdx;
+        }
+        if (
+            (this.#data[finalCompareIdx] ||
+                this.#data[finalCompareIdx] === 0) &&
+            this.#data[finalCompareIdx] > this.#data[trickleNodeIdx]
+        ) {
+            return finalCompareIdx;
+        }
+
+        return trickleNodeIdx;
     }
 
     insert(value) {
         this.#data.push(value);
-        let newNodeIndex = this.#length - 1;
-        let parentIndex = this.#parentIndex(newNodeIndex);
+        let newNodeIdx = this.length - 1;
+
+        let parentIdx = this.#parentIdx(newNodeIdx);
 
         while (
-            this.#data[newNodeIndex] > this.#data[parentIndex] &&
-            newNodeIndex > 0
+            this.#data[newNodeIdx] > this.#data[parentIdx] &&
+            newNodeIdx > 0
         ) {
-            [this.#data[newNodeIndex], this.#data[parentIndex]] = [
-                this.#data[parentIndex],
-                this.#data[newNodeIndex]
+            [this.#data[newNodeIdx], this.#data[parentIdx]] = [
+                this.#data[parentIdx],
+                this.#data[newNodeIdx]
             ];
-
-            newNodeIndex = parentIndex;
-            parentIndex = this.#parentIndex(newNodeIndex);
-        }
-    }
-
-    #calculateLargerChildIndex(trickleNodeIndex) {
-        let leftChildIndex = this.#leftChildIndex(trickleNodeIndex);
-        let rightChildIndex = this.#rightChildIndex(trickleNodeIndex);
-
-        if (
-            this.#data[rightChildIndex] &&
-            this.#data[rightChildIndex] > this.#data[leftChildIndex]
-        ) {
-            return rightChildIndex;
-        } else {
-            return leftChildIndex;
+            newNodeIdx = parentIdx;
+            parentIdx = this.#parentIdx(newNodeIdx);
         }
     }
 
     delete() {
-        let largestValue = this.rootNode;
-        if (this.#length <= 1) {
-            return this.#data.pop();
-        }
-        this.#data[0] = this.#data.pop();
-        let trickleNodeIndex = 0;
-        let leftChildIndex = this.#leftChildIndex(trickleNodeIndex);
+        let largestValue = this.#data[0];
+        let lastNode = this.#data.pop();
+        if (!this.length) return lastNode;
+        this.#data[0] = lastNode;
+        let trickleNodeIdx = 0;
+        let largerChildIdx = this.#calculateLargerChildIdx(trickleNodeIdx);
 
-        while (this.#data[leftChildIndex]) {
-            let largerChildIndex =
-                this.#calculateLargerChildIndex(trickleNodeIndex);
-
-            if (this.#data[largerChildIndex] < this.#data[trickleNodeIndex])
-                break;
-            [this.#data[trickleNodeIndex], this.#data[largerChildIndex]] = [
-                this.#data[largerChildIndex],
-                this.#data[trickleNodeIndex]
+        while (trickleNodeIdx !== largerChildIdx) {
+            [this.#data[trickleNodeIdx], this.#data[largerChildIdx]] = [
+                this.#data[largerChildIdx],
+                this.#data[trickleNodeIdx]
             ];
-            trickleNodeIndex = largerChildIndex;
-            leftChildIndex = this.#leftChildIndex(largerChildIndex);
+            trickleNodeIdx = largerChildIdx;
+            largerChildIdx = this.#calculateLargerChildIdx(trickleNodeIdx);
         }
         return largestValue;
     }
